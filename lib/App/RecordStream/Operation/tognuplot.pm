@@ -31,7 +31,7 @@ sub init {
     "key|k|fields|f=s"  => sub { $key_groups->add_groups($_[1]); },
     "label=s"           => sub { push @labels, split(/,/, $_[1]); },
     "plot=s"            => sub { push @plots, split(/,/, $_[1]); },
-    "precommand=s"      => sub { push @precommands, split(/,/, $_[1]); },
+    "precommand=s"      => sub { push @precommands, $_[1]; },
     "title=s"           => \$title,
     "using=s"           => sub { push @using,  $_[1]; },
     'bargraph'          => \$bar_graph,
