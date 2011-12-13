@@ -126,6 +126,15 @@ keygroup calculation
 Returns the values in this record for a key group.  Will rerun keygroup parsing
 if $rerun is passed
 
+=item $string_representation = $this->to_string()
+
+Returns a string representation of this record suitable for using to make a
+stream.  Uses L<App::RecordStream::OutputStream>.  Note that a newline is not
+included, so if you join records to make a stream you must insert one yourself
+(but using OutputStream directly is far better).
+
+
+This is a fine helper method for one-off things, but for more 
 =item $comparators_ref = App::RecordStream::Record::get_comparators(@specs)
 
 Calls get_comparator for each element of @specs and returns the results
@@ -157,6 +166,7 @@ use warnings;
 
 use App::RecordStream::KeyGroups;
 use App::RecordStream::KeySpec;
+use App::RecordStream::OutputStream;
 
 use Data::Dumper;
 
@@ -375,6 +385,11 @@ sub as_hashref
 sub TO_JSON {
   my ($this) = @_;
   return $this->as_hashref();
+}
+
+sub to_string {
+    my ($this) = @_;
+    return App::RecordStream::OutputStream::hashref_string($this);
 }
 
 sub has_key_spec {
